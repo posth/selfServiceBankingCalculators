@@ -1,0 +1,33 @@
+body {
+    font-family: sans-serif;
+}
+
+.headerTitle {
+    background-color: darkblue;
+    padding: 2rem;
+    font-size: 3rem;
+    color: #fff;
+    font-style: italic;
+    margin: 0;
+}
+
+#informationForm {
+    display: inline-block;
+    padding: 2rem;
+}
+
+#informationForm label {
+    margin-right: 1rem;
+}
+
+#informationForm input {
+    float: right;
+}
+
+#informationForm span {
+    display: block;
+}
+
+#forwardingForm {
+
+}
