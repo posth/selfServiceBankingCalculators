@@ -12,7 +12,10 @@
         <title>Result of your calculation</title>
     </head>
     <body>
-        <h1>Calculator result</h1>
+        <h1>Loan Calculator result</h1>
         <p>${loan.monthlyPayment}</p>
+        
+        <h1>Future Value of Savings result</h1>
+        <p>${futureValue.futureValue}</p>
     </body>
 </html>

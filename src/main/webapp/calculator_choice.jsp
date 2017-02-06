@@ -33,5 +33,24 @@
                 <button type="submit" value="Calculate Monthly Payment">Calculate Monthly Loan Payment</button>
             </p>
         </form>
+
+        <!-- Form for the Future Value of Savings Calculator -->
+        <form id="futureValueSavingsForm" action="FutureValueCalculator" method="post">
+            <p>
+                <label>Payment Per Period - per month</label>
+                <input type="number" name="paymentPerPeriod" step="0.1" value="${futureValue.paymentPerPeriod}" required>
+            </p>
+            <p>
+                <label>Annual rate of interest on savings</label>
+                <input type="number" name="rateOfInterest" step="0.1" value="${futureValue.rateOfInterest}" required>
+            </p>
+            <p>
+                <label>Term(years)</label>
+                <input type="number" name="termInYears" value="${futureValue.termInYears}" required>
+            </p>
+            <p>
+                <button type="submit" value="Calculate Future Value of Savings">Calculate Future Value of Savings</button>
+            </p>
+        </form>
     </body>
 </html>

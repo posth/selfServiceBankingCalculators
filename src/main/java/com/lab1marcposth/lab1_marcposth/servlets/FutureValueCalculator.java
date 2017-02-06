@@ -1,7 +1,6 @@
 package com.lab1marcposth.lab1_marcposth.servlets;
 
-import com.lab1marcposth.lab1_marcposth.beans.Loan;
-
+import com.lab1marcposth.lab1_marcposth.beans.FutureValue;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
@@ -17,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Marc
  */
-@WebServlet(name = "LoanCalculator", urlPatterns = {"/LoanCalculator"})
-public class LoanCalculator extends HttpServlet {
+@WebServlet(name = "FutureValueCalculator", urlPatterns = {"/FutureValueCalculator"})
+public class FutureValueCalculator extends HttpServlet {
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -31,48 +30,47 @@ public class LoanCalculator extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         String url = "/calculator_result.jsp";
-        
+
         //Grabbing the information from the form in the calculator_choice.jsp file
-        String principalString = request.getParameter("principal");
+        String paymentPerPeriodString = request.getParameter("paymentPerPeriod");
         String rateOfInterestString = request.getParameter("rateOfInterest");
-        String termString = request.getParameter("term");
-        
+        String termInYearsString = request.getParameter("termInYears");
+
         //Converting the Strings to their appropriate types to pass to the object
-        double principal = Double.parseDouble(principalString);
+        double paymentPerPeriod = Double.parseDouble(paymentPerPeriodString);
         double rateOfInterest = Double.parseDouble(rateOfInterestString);
-        Integer term = Integer.parseInt(termString);
-        
+        Integer termInYears = Integer.parseInt(termInYearsString);
+
         //Create the bean instance with the user inputted data
-        Loan loan = new Loan(principal, rateOfInterest, term);
-        
-        //Get calculated monthly payment of the loan and place it into the bean
-        double monthlyPaymentCalculated = this.calculateLoan(loan);
-        
+        FutureValue futureValue = new FutureValue(paymentPerPeriod, rateOfInterest, termInYears);
+
+        //Calculating the result of the future savings
+        double futureValueSavingsResult = this.calculateFutureValueSavings(futureValue);
+
         //Setting the currency format to Canada
         NumberFormat CAFormat = NumberFormat.getCurrencyInstance(Locale.CANADA);
-        
+
         //Setting the monthly Payment as a formatted currency onto the bean 
-        loan.setMonthlyPayment(CAFormat.format(monthlyPaymentCalculated));
-        
+        futureValue.setFutureValue(CAFormat.format(futureValueSavingsResult));
+
         //Attaching the bean with the information onto the payload to forward
-        request.setAttribute("loan", loan);
-        
+        request.setAttribute("futureValue", futureValue);
+
         //Forward the information to the results page
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-        dispatcher.forward(request,response);
+        dispatcher.forward(request, response);
     }
-    
-    private Double calculateLoan(Loan loan) {
-        
-        //Setting up the values for the monthly payment calculation
-        double rate = (loan.getRateOfInterest() / 12) / 100;
-        Integer n = loan.getTerm();
-        double presentValue = loan.getPrincipal();
-        
-        //Returning the monthly payment
-        return presentValue * (rate / (1 - (Math.pow((1+rate), -n))));
+
+    private Double calculateFutureValueSavings(FutureValue futureValue) {
+
+        //Setting up the values for the future value savings calculation
+        Integer n = futureValue.getTermInYears() * 12;
+        double rate = (futureValue.getRateOfInterest() / n) / 100;
+        double paymentPerPeriod = futureValue.getPaymentPerPeriod();
+
+        //Returning the future value savings amount
+        return paymentPerPeriod * ((1 - (Math.pow((1 + rate), -n))) / rate);
     }
 
     /**
@@ -92,10 +90,10 @@ public class LoanCalculator extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoanCalculator</title>");
+            out.println("<title>Servlet FutureValueCalculator</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoanCalculator at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet FutureValueCalculator at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
