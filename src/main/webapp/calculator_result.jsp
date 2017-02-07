@@ -12,17 +12,9 @@
         <title>Result of your calculation</title>
     </head>
     <body>
-
-    <c:if ${futureValue.futureValue}>
-        <p>Future Value of Savings result: ${futureValue.futureValue}</p>
-    </c:if>
-
-    <c:if ${savings.monthlyPayment}>
-        <p>Savings per month needed: ${savings.monthlyPayment}</p>
-    </c:if>
-
-    <c:if ${loan.monthlyPayment}>
-        <p>Loan Calculator result: ${loan.monthlyPayment}</p>
-    </c:if>
-</body>
+        <h4>The results of your calculator are:</h4>
+        <p>${futureValue.futureValue}</p>
+        <p>${savings.monthlyPayment}</p>
+        <p>${loan.monthlyPayment}</p>
+    </body>
 </html>
