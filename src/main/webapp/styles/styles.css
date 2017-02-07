@@ -2,6 +2,48 @@ body {
     font-family: sans-serif;
 }
 
+label {
+    margin: 0 15px;
+}
+
+input {
+    float: right;
+}
+
+h3 {
+    margin: 0;
+    font-style: italic;
+}
+
+.intro-block form button{
+    padding: 11px;
+    margin: 10px 0;
+    background-color: cornflowerblue;
+    border: none;
+    float: right;
+    color: #fff;
+    border: 1px solid rgba(55, 55, 55, .8); 
+}
+
+.intro-block form button:hover {
+    box-shadow: 1px 1px 1px rgba(55, 55, 55, .4);
+    background-color: #fff;
+    color: cornflowerblue;
+}
+
+#forwardingForm button {
+    float: right;
+    background-color: #fff;
+    color: #000;
+    margin: 0 50px;
+    border: none;
+}
+
+#forwardingForm button:hover {
+    text-decoration: underline;
+    box-shadow: none;
+}
+
 .headerTitle {
     background-color: darkblue;
     padding: 2rem;
@@ -35,11 +77,55 @@ body {
 /* 
     Calculator Choice page styles 
 */
+.intro-paragraph {
+    margin: 20px;
+}
 
-#loanCalculatorForm {
+.intro-paragraph p {
+    font-size: 24px;
+}
+
+.form-wrapper button{
+    padding: 11px;
+    margin: 10px 0;
+    background-color: cornflowerblue;
+    border: none;
+    float: right;
+    color: #fff;
+    border: 1px solid rgba(55, 55, 55, .8);
+}
+
+.form-wrapper button:hover {
+    box-shadow: 1px 1px 1px rgba(55, 55, 55, .4);
+    background-color: #fff;
+    color: cornflowerblue;
+}
+
+.form-wrapper form {
 
 }
 
-#futureValueSavingsForm {
+#loanCalculatorForm {
+    display: inline-block;
+    background-color: lightblue;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid rgba(55, 55, 55, .3);
+}
 
+
+#futureValueSavingsForm {
+    display: inline-block;
+    background-color: aliceblue;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid rgba(55, 55, 55, .3);
+}
+
+#savingsForm {
+    display: inline-block;
+    background-color: lightblue;
+    padding: 20px; 
+    margin: 20px;
+    border: 1px solid rgba(55, 55, 55, .3);
 }

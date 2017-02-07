@@ -1,6 +1,6 @@
 package com.lab1marcposth.lab1_marcposth.servlets;
 
-import com.lab1marcposth.lab1_marcposth.beans.FutureValue;
+import com.lab1marcposth.lab1_marcposth.beans.Savings;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Marc
  */
-@WebServlet(name = "FutureValueCalculator", urlPatterns = {"/FutureValueCalculator"})
-public class FutureValueCalculator extends HttpServlet {
+@WebServlet(name = "SavingsCalculator", urlPatterns = {"/SavingsCalculator"})
+public class SavingsCalculator extends HttpServlet {
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -30,48 +30,51 @@ public class FutureValueCalculator extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         String url = "/calculator_result.jsp";
 
         //Grabbing the information from the form in the calculator_choice.jsp file
-        String paymentPerPeriodString = request.getParameter("paymentPerPeriod");
+        String targetAmountString = request.getParameter("targetAmount");
         String rateOfInterestString = request.getParameter("rateOfInterest");
         String termInYearsString = request.getParameter("termInYears");
 
         //Converting the Strings to their appropriate types to pass to the object
-        double paymentPerPeriod = Double.parseDouble(paymentPerPeriodString);
+        double targetAmount = Double.parseDouble(targetAmountString);
         double rateOfInterest = Double.parseDouble(rateOfInterestString);
         double termInYears = Double.parseDouble(termInYearsString);
 
         //Create the bean instance with the user inputted data
-        FutureValue futureValue = new FutureValue(paymentPerPeriod, rateOfInterest, termInYears);
+        Savings savings = new Savings(targetAmount, rateOfInterest, termInYears);
 
-        //Calculating the result of the future savings
-        double futureValueSavingsResult = this.calculateFutureValueSavings(futureValue);
+        //Calculating the result of the  savings
+        double savingsResult = this.calculateSavings(savings);
 
         //Setting the currency format to Canada
         NumberFormat CAFormat = NumberFormat.getCurrencyInstance(Locale.CANADA);
 
         //Setting the monthly Payment as a formatted currency onto the bean 
-        futureValue.setFutureValue(CAFormat.format(futureValueSavingsResult));
+        savings.setMonthlyPayment(CAFormat.format(savingsResult));
 
         //Attaching the bean with the information onto the payload to forward
-        request.setAttribute("futureValue", futureValue);
+        request.setAttribute("savings", savings);
   
         //Forward the information to the results page
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request, response);
     }
+    
+    
+    private Double calculateSavings(Savings savings) {
 
-    private Double calculateFutureValueSavings(FutureValue futureValue) {
-
-        //Setting up the values for the future value savings calculation
-        double n = futureValue.getTermInYears() * 12;
-        double rate = (futureValue.getRateOfInterest() / 100);
-
-        double paymentPerPeriod = futureValue.getPaymentPerPeriod();
-
+        //Setting up the values for the  savings calculation
+        double rate = (savings.getRateOfInterest() / 100);
+        double n = savings.getTermInYears() * 12;
+        double futureValue = savings.getTargetAmount();
+        
+        double result = futureValue * (rate / ((Math.pow((1+rate), n)) -1));
+        
         //Returning the future value savings amount
-        return paymentPerPeriod * (((Math.pow((1 + rate), n)) - 1) / rate);
+        return result;
     }
 
     /**
@@ -91,10 +94,10 @@ public class FutureValueCalculator extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet FutureValueCalculator</title>");
+            out.println("<title>Servlet SavingsCalculator</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet FutureValueCalculator at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SavingsCalculator at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

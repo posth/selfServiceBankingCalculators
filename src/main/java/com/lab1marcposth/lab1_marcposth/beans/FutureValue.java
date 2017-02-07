@@ -10,7 +10,7 @@ public class FutureValue {
 
     private double paymentPerPeriod;
     private double rateOfInterest;
-    private int termInYears;
+    private double termInYears;
     private String futureValue;
 
     public FutureValue() {
@@ -20,7 +20,7 @@ public class FutureValue {
         futureValue = "";
     }
 
-    public FutureValue(double paymentPerPeriod, double rateOfInterest, int termInYears) {
+    public FutureValue(double paymentPerPeriod, double rateOfInterest, double termInYears) {
         this.paymentPerPeriod = paymentPerPeriod;
         this.rateOfInterest = rateOfInterest;
         this.termInYears = termInYears;
@@ -42,11 +42,11 @@ public class FutureValue {
         this.rateOfInterest = rateOfInterest;
     }
 
-    public int getTermInYears() {
+    public double getTermInYears() {
         return termInYears;
     }
 
-    public void setTermInYears(int termInYears) {
+    public void setTermInYears(double termInYears) {
         this.termInYears = termInYears;
     }
 
@@ -61,10 +61,10 @@ public class FutureValue {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + (int) (Double.doubleToLongBits(this.paymentPerPeriod) ^ (Double.doubleToLongBits(this.paymentPerPeriod) >>> 32));
-        hash = 53 * hash + (int) (Double.doubleToLongBits(this.rateOfInterest) ^ (Double.doubleToLongBits(this.rateOfInterest) >>> 32));
-        hash = 53 * hash + this.termInYears;
-        hash = 53 * hash + Objects.hashCode(this.futureValue);
+        hash = 13 * hash + (int) (Double.doubleToLongBits(this.paymentPerPeriod) ^ (Double.doubleToLongBits(this.paymentPerPeriod) >>> 32));
+        hash = 13 * hash + (int) (Double.doubleToLongBits(this.rateOfInterest) ^ (Double.doubleToLongBits(this.rateOfInterest) >>> 32));
+        hash = 13 * hash + (int) (Double.doubleToLongBits(this.termInYears) ^ (Double.doubleToLongBits(this.termInYears) >>> 32));
+        hash = 13 * hash + Objects.hashCode(this.futureValue);
         return hash;
     }
 
@@ -86,7 +86,7 @@ public class FutureValue {
         if (Double.doubleToLongBits(this.rateOfInterest) != Double.doubleToLongBits(other.rateOfInterest)) {
             return false;
         }
-        if (this.termInYears != other.termInYears) {
+        if (Double.doubleToLongBits(this.termInYears) != Double.doubleToLongBits(other.termInYears)) {
             return false;
         }
         if (!Objects.equals(this.futureValue, other.futureValue)) {
